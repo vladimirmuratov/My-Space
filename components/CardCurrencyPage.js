@@ -1,10 +1,11 @@
 import {View, StyleSheet, Text} from "react-native";
 import {Entypo, FontAwesome} from "@expo/vector-icons";
 
-export const CardCurrency = ({CharCode, Value, Previous}) => {
+export const CardCurrencyPage = ({CharCode, Value, Previous}) => {
     let iconName
     let diffValue = (Previous - Value).toFixed(2)
     const diffValueSymbol = diffValue > 0 ? '-' : '+'
+    const value = Value.toFixed(2)
 
     const colorTriangle = diffValue > 0 ? 'red' : 'green'
     const triangleDirection = diffValue > 0 ? 'triangle-down' : 'triangle-up'
@@ -23,7 +24,7 @@ export const CardCurrency = ({CharCode, Value, Previous}) => {
     return (
         <View style={styles.container}>
             <FontAwesome style={styles.symbol} name={iconName}/>
-            <Text style={styles.value}>{Value}</Text>
+            <Text style={styles.value}>{value}</Text>
             <Entypo name={triangleDirection} size={26} color={colorTriangle}/>
             <Text style={styles.diff}>{`${diffValueSymbol} ${diffValue}`}</Text>
         </View>

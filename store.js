@@ -3,9 +3,7 @@ import {WEATHER_API_KEY} from "./config";
 
 export const useStore = create((set, get) => ({
     weather: {},
-    currencies: {
-        values: []
-    },
+    currencies: {},
     error: null,
     loading: false,
     fetchWeather: async (lat, lon) => {
@@ -14,23 +12,20 @@ export const useStore = create((set, get) => ({
             loading: true
         })
         const url_get_city_name = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
-        const url_get_current_weather = (city) => `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=ru&appid=${WEATHER_API_KEY}`
+        const url_get_weather = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric&lang=ru`
         try {
-            const response = await fetch(url_get_city_name)
-            const data = await response.json()
-            const city = data[0]['local_names']['ru']
-            if (city) {
-                const res = await fetch(url_get_current_weather(city))
-                const data = await res.json()
-                set({
-                    weather: {
-                        city,
-                        temp: data.main.temp,
-                        description: data.weather[0].description,
-                        icon: data.weather[0].icon,
-                    }
-                })
-            }
+            const resCity = await fetch(url_get_city_name)
+            const dataCity = await resCity.json()
+            const city = dataCity[0]['local_names']['ru']
+            const resWeather = await fetch(url_get_weather)
+            const dataWeather = await resWeather.json()
+            set({
+                weather: {
+                    city,
+                    daily: dataWeather.daily
+                },
+                loading: false
+            })
         } catch (_) {
             set({
                 error: '500 Internal Server Error',
@@ -60,7 +55,8 @@ export const useStore = create((set, get) => ({
                 currencies: {
                     date,
                     values: [usd, eur, cny]
-                }
+                },
+                loading: false
             })
         } catch (_) {
             set({

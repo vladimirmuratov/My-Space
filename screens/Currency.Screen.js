@@ -1,10 +1,10 @@
-import {Text, View, StyleSheet, FlatList, Alert} from "react-native";
+import {Text, View, StyleSheet, FlatList, Alert, ActivityIndicator} from "react-native";
 import {globalStyle} from "../styles/globalStyle";
 import {useStore} from "../store";
-import {CardCurrency} from "../components/CardCurrency";
+import {CardCurrencyPage} from "../components/CardCurrencyPage";
 
 export const CurrencyScreen = () => {
-    const {currencies, error} = useStore(state => state)
+    const {currencies, error, loading} = useStore(state => state)
     const {date, values} = currencies
 
     const getDateLocale = () => {
@@ -13,6 +13,7 @@ export const CurrencyScreen = () => {
 
     return (
         <View style={globalStyle.container}>
+            <ActivityIndicator animating={loading} style={globalStyle.loader} size="large"/>
             {error
                 ? Alert.alert(error, 'Try again later', [
                     {text: 'OK'}
@@ -24,7 +25,7 @@ export const CurrencyScreen = () => {
                 data={values}
                 keyExtractor={item => item['ID']}
                 renderItem={({item}) => (
-                    <CardCurrency {...item}/>
+                    <CardCurrencyPage {...item}/>
                 )}
             />
         </View>
