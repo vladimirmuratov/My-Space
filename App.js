@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {Navigate} from "./navigate";
+import {useEffect} from "react";
+import {useStore} from "./store";
+import * as Location from 'expo-location';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    const {fetchWeather, fetchCurrency} = useStore(state => state)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    useEffect(() => {
+        (async () => {
+
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                console.log(('Permission to access location was denied'));
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            const lat = location.coords.latitude
+            const lon = location.coords.longitude
+            if(lat && lon){
+                await fetchWeather(lat, lon)
+            }
+        })()
+
+        fetchCurrency()
+
+    }, []);
+
+    return <Navigate/>
+}
