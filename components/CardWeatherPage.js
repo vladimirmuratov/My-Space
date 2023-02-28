@@ -12,7 +12,7 @@ export const CardWeatherPage = (props) => {
     const icon = weather[0].icon
     const today = new Date().toLocaleDateString() === new Date(dt * 1000).toLocaleDateString()
     const day = dayOfWeek[new Date(dt * 1000).getDay()]
-    const date = new Date(dt * 1000).toLocaleDateString()
+    const date = new Date(dt * 1000).toLocaleDateString("ru-RU")
 
     return (
         <View style={[globalStyle.bgPageItem, styles.wrapper]}>

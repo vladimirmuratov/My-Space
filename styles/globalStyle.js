@@ -15,6 +15,6 @@ export const globalStyle = StyleSheet.create({
         right: 0,
         bottom: 0,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 })

@@ -4,7 +4,7 @@ import {useStore} from "./store";
 import * as Location from 'expo-location';
 
 export default function App() {
-    const {fetchWeather, fetchCurrency} = useStore(state => state)
+    const {fetchWeather, fetchCurrency, fetchNotes} = useStore(state => state)
 
     useEffect(() => {
         (async () => {
@@ -24,6 +24,7 @@ export default function App() {
         })()
 
         fetchCurrency()
+        fetchNotes()
 
     }, []);
 

@@ -1,9 +1,13 @@
 import {create} from 'zustand';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {WEATHER_API_KEY} from "./config";
+
+const NOTES_KEY = '@notes_key'
 
 export const useStore = create((set, get) => ({
     weather: {},
     currencies: {},
+    notes: [],
     error: null,
     loading: false,
     fetchWeather: async (lat, lon) => {
@@ -68,5 +72,47 @@ export const useStore = create((set, get) => ({
                 loading: false
             })
         }
+    },
+    fetchNotes: async () => {
+        try {
+            const notes = await AsyncStorage.getItem(NOTES_KEY)
+            if (notes) {
+                set({
+                    notes: JSON.parse(notes)
+                })
+            }
+        } catch (e) {
+            set({
+                error: e.message
+            })
+        }
+    },
+    createNote: async (payload) => {
+        let notes = get().notes
+        set({
+            notes: [
+                payload,
+                ...notes
+            ]
+        })
+        notes = [
+            payload,
+            ...notes
+        ]
+        try {
+            await AsyncStorage.setItem(NOTES_KEY, JSON.stringify(notes))
+        } catch (e) {
+            set({
+                error: e.message
+            })
+        }
+    },
+    deleteNote: async (id) => {
+        let notes = get().notes
+        notes = notes.filter(item => item.id !== id)
+        set({
+            notes
+        })
+        await AsyncStorage.setItem(NOTES_KEY, JSON.stringify(notes))
     }
 }))

@@ -8,12 +8,12 @@ export const CurrencyScreen = () => {
     const {date, values} = currencies
 
     const getDateLocale = () => {
-        return new Date(date).toLocaleDateString()
+        return new Date(date).toLocaleDateString("ru-RU")
     }
 
     return (
         <View style={globalStyle.container}>
-            <ActivityIndicator animating={loading} style={globalStyle.loader} size="large"/>
+            <ActivityIndicator color="#eeeeee" animating={loading} style={globalStyle.loader} size="large"/>
             {error
                 ? Alert.alert(error, 'Try again later', [
                     {text: 'OK'}

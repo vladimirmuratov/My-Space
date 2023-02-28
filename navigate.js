@@ -3,6 +3,8 @@ import {NavigationContainer} from "@react-navigation/native";
 import {MainScreen} from "./screens/Main.Screen";
 import {WeatherScreen} from "./screens/Weather.Screen";
 import {CurrencyScreen} from "./screens/Currency.Screen";
+import {NotesScreen} from "./screens/Notes.Screen";
+import {NewNoteScreen} from "./screens/NewNote.Screen";
 
 const Stack = createNativeStackNavigator()
 
@@ -46,6 +48,38 @@ export const Navigate = () => {
                     component={CurrencyScreen}
                     options={{
                         title: 'Курс валют',
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#ffffff',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTitleStyle: {
+                            fontSize: 24,
+                            color: 'white',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="Notes"
+                    component={NotesScreen}
+                    options={{
+                        title: 'Заметки',
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#ffffff',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTitleStyle: {
+                            fontSize: 24,
+                            color: 'white',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="NewNote"
+                    component={NewNoteScreen}
+                    options={{
+                        title: 'Новая Заметка',
                         headerTitleAlign: 'center',
                         headerTintColor: '#ffffff',
                         headerStyle: {

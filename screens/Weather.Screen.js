@@ -10,7 +10,7 @@ export const WeatherScreen = () => {
 
     return (
         <View style={globalStyle.container}>
-            <ActivityIndicator animating={loading} style={globalStyle.loader} size="large"/>
+            <ActivityIndicator color="#eeeeee" animating={loading} style={globalStyle.loader} size="large"/>
             {error
                 ? Alert.alert(error, 'Try again later', [
                     {text: 'OK'}
