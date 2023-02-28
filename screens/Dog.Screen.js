@@ -1,5 +1,5 @@
 import {useStore} from "../store";
-import {CardAnimal} from "../components/CardAnimal";
+import {CardAnimalPage} from "../components/CardAnimalPage";
 
 export const DogScreen = () => {
     const {dogs, fetchDogs, loading} = useStore(state => state)
@@ -7,5 +7,5 @@ export const DogScreen = () => {
 
     const handlePress = () => fetchDogs()
 
-    return <CardAnimal url={url} loading={loading} onPress={handlePress}/>
+    return <CardAnimalPage url={url} loading={loading} onPress={handlePress}/>
 }

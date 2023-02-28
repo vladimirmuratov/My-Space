@@ -1,7 +1,7 @@
 import {globalStyle} from "../styles/globalStyle";
 import {ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-export const CardAnimal = ({url, loading, onPress: handlePress}) => {
+export const CardAnimalPage = ({url, loading, onPress: handlePress}) => {
     return(
         <View style={[globalStyle.container]}>
             <ActivityIndicator style={styles.loader} animating={loading} size="large" color="white"/>
