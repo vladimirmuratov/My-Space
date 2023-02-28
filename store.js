@@ -8,6 +8,8 @@ export const useStore = create((set, get) => ({
     weather: {},
     currencies: {},
     notes: [],
+    cats: [],
+    dogs: [],
     error: null,
     loading: false,
     fetchWeather: async (lat, lon) => {
@@ -22,11 +24,11 @@ export const useStore = create((set, get) => ({
             const dataCity = await resCity.json()
             const city = dataCity[0]['local_names']['ru']
             const resWeather = await fetch(url_get_weather)
-            const dataWeather = await resWeather.json()
+            const json = await resWeather.json()
             set({
                 weather: {
                     city,
-                    daily: dataWeather.daily
+                    daily: json.daily
                 },
                 loading: false
             })
@@ -50,11 +52,11 @@ export const useStore = create((set, get) => ({
         const url_currency = 'https://www.cbr-xml-daily.ru/daily_json.js'
         try {
             const response = await fetch(url_currency)
-            const data = await response.json()
-            const date = data.Timestamp
-            const usd = data['Valute']['USD']
-            const eur = data['Valute']['EUR']
-            const cny = data['Valute']['CNY']
+            const json = await response.json()
+            const date = json.Timestamp
+            const usd = json['Valute']['USD']
+            const eur = json['Valute']['EUR']
+            const cny = json['Valute']['CNY']
             set({
                 currencies: {
                     date,
@@ -74,6 +76,10 @@ export const useStore = create((set, get) => ({
         }
     },
     fetchNotes: async () => {
+        set({
+            error: null,
+            loading: true
+        })
         try {
             const notes = await AsyncStorage.getItem(NOTES_KEY)
             if (notes) {
@@ -81,9 +87,64 @@ export const useStore = create((set, get) => ({
                     notes: JSON.parse(notes)
                 })
             }
+            set({
+                loading: false
+            })
         } catch (e) {
             set({
-                error: e.message
+                error: e.message,
+                loading: false
+            })
+        } finally {
+            set({
+                loading: false
+            })
+        }
+    },
+    fetchCats: async () => {
+        set({
+            error: null,
+            loading: true
+        })
+        try {
+            const res = await fetch('https://api.thecatapi.com/v1/images/search')
+            const json = await res.json()
+
+            set({
+                cats: json,
+                loading: false
+            })
+        } catch (e) {
+            set({
+                error: e.message,
+                loading: false
+            })
+        } finally {
+            set({
+                loading: false
+            })
+        }
+    },
+    fetchDogs: async () => {
+        set({
+            error: null,
+            loading: true
+        })
+        try {
+            const res = await fetch('https://api.thedogapi.com/v1/images/search')
+            const json = await res.json()
+            set({
+                dogs: json,
+                loading: false
+            })
+        } catch (e) {
+            set({
+                error: e.message,
+                loading: false
+            })
+        } finally {
+            set({
+                loading: false
             })
         }
     },

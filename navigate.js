@@ -5,6 +5,8 @@ import {WeatherScreen} from "./screens/Weather.Screen";
 import {CurrencyScreen} from "./screens/Currency.Screen";
 import {NotesScreen} from "./screens/Notes.Screen";
 import {NewNoteScreen} from "./screens/NewNote.Screen";
+import {CatScreen} from "./screens/Cat.Screen";
+import {DogScreen} from "./screens/Dog.Screen";
 
 const Stack = createNativeStackNavigator()
 
@@ -80,6 +82,38 @@ export const Navigate = () => {
                     component={NewNoteScreen}
                     options={{
                         title: 'Новая Заметка',
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#ffffff',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTitleStyle: {
+                            fontSize: 24,
+                            color: 'white',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="Cats"
+                    component={CatScreen}
+                    options={{
+                        title: 'Котики',
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#ffffff',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTitleStyle: {
+                            fontSize: 24,
+                            color: 'white',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="Dogs"
+                    component={DogScreen}
+                    options={{
+                        title: 'Пёсики',
                         headerTitleAlign: 'center',
                         headerTintColor: '#ffffff',
                         headerStyle: {
